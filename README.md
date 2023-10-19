@@ -69,5 +69,3 @@ This means that the turtlesim did simulate but there was no GUI so it exited.
 ## 4. Setting up the environment
 
 After this point make a separate directory to store your [Dockerfile](https://docs.docker.com/engine/reference/builder/) and other scripts. There should be only 1 Dockerfile and it has no extensions like `.txt`, `.bash`, etc. For simplicity, clone this  entire project.
-
-check check
