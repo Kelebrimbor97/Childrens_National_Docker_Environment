@@ -17,4 +17,3 @@ RUN source /opt/ros/galactic/setup.bash \
     && git clone https://github.com/Kelebrimbor97/Childrens_National_Docker_Environment
 
 # Unclear from this point
-RUN apt install -y python3-colcon
