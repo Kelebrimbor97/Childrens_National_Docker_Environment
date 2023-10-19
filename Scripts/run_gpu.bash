@@ -10,7 +10,8 @@ docker run -it \
     --env="XAUTHORITY=$XAUTH" \
     --volume="$XAUTHORITY=$XAUTH" \
     --net=host \
-    --priviliged \
+    --privileged \
+    --runtime=nvidia \
     osrf/ros:galactic-desktop \
     bash
 
