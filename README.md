@@ -1,5 +1,7 @@
 # Childrens National Docker Environment
 
+Step 1: Clone this repo
+
 This repo contains the instructions to setup the docker environment for the Kuka and Smart wheelchair projects. In theory, since we are using docker, the steps after installing docker should be the same for both windows and linux. Initially the steps shown in [this video](https://www.youtube.com/watch?v=qWuudNxFGOQ) (Also featured by ROS on their official documentation site) were followed, with the simple modification of ROS2 Galactic instead of [ROS2 Foxy](https://docs.ros.org/en/foxy/index.html). Moving ahead, the individual packages required for these projects can be found in their respective sections. As of the moment, while this project is in progress, the reason for opting to use ROS2 Galactic is it's high stability. We noticed that ROS2 Humble 
 
 _Note:_ 
