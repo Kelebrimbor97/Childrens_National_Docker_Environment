@@ -36,8 +36,23 @@ After succesfully installing docker pull the custom docker image created by [All
 > [!Warning]
 > Make sure that you choose the right OS, the right cuda version, and the right Distribution compatible with your system, in this specified order.
 
-> [!Note]
+> [!Important]
 > Galactic has reached End of Life (EOL) so there may be issues in the future such as Nvidia cuda image version mismatch. In the image provided by Allison Thackston uses CUDA 11.7. However, that version does not exist on Dockerhub (atleast not anyomre) and thus if you try to docker-run it directly, it will pop up with an error. Simplest method to counter this is to go to Nvidia's Dockerhub ([nvidia/cuda](https://hub.docker.com/r/nvidia/cuda)) and select the correct docker image.
+
+Pull the galactic image
+
+   1. If you **have** CUDA enabled GPU:
+      ```Shell
+      docker pull althack/ros2:galactic-cuda-gazebo-nvidia-2022-12-01
+      ```
+
+   2. If you **DON'T have** CUDA enabled GPU:
+      ```Shell
+      docker pull althack/ros2:galactic-gazebo-2022-12-01
+      ``` 
+
+For further uses we have assumed CUDA enabled systems.
+
 
 ### Testing GUI availabity
 
