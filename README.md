@@ -3,7 +3,7 @@
 Step 1: Clone this repo
 
 ### Description
-This repo contains the instructions to setup the docker environment for the Kuka and Smart wheelchair projects. In theory, since we are using docker, the steps after installing docker should be the same for both windows and linux. Initially the steps shown in [this video](https://www.youtube.com/watch?v=qWuudNxFGOQ) (Also featured by ROS on their official documentation site) were followed, with the simple modification of ROS2 Galactic instead of [ROS2 Foxy](https://docs.ros.org/en/foxy/index.html). Moving ahead, the individual packages required for these projects can be found in their respective sections. As of the moment, while this project is in progress, the reason for opting to use ROS2 Galactic is it's high stability. We noticed that ROS2 Humble 
+This repo contains the instructions to setup the docker environment for the Kuka and Smart wheelchair projects. In theory, since we are using docker, the steps after installing docker should be the same for both windows and linux. Initially the steps shown in [this video](https://www.youtube.com/watch?v=qWuudNxFGOQ) (Also featured by ROS on their official documentation site) were followed, with the simple modification of ROS2 Galactic instead of [ROS2 Foxy](https://docs.ros.org/en/foxy/index.html). Moving ahead, the individual packages required for these projects can be found in their respective sections. As of the moment, while this project is in progress, the reason for opting to use ROS2 Galactic is it's high stability. We noticed that ROS2 Humble has issued loading URDF files as 
 
 _Note:_ 
 - Docker installation instructions are provided below, while it is assumed that proper graphical drivers and CUDA for Nvidia GPUs are installed, the official instructions for which can be found [here](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/contents.html).
@@ -28,26 +28,13 @@ The contents of this repo were tested on the following system (not all of it is 
 
 The official docker installation guide can be found [here](https://docs.docker.com/engine/install/).
 
-For fast and easy access, it is recommended to install [docker desktop](https://www.docker.com/products/docker-desktop/). Optionally, the same steps can also be performed through CLI commands.
 
 ## 3. Downloading ROS 2 Docker image
 
-After succesfully installing docker, we pull the ROS2 Galactic full image
+After succesfully installing docker pull the custom docker image created by [Allison Thackston](https://www.allisonthackston.com/) on [Dockerhub](https://hub.docker.com/r/althack/ros2).
 
-```Shell
-docker pull osrf/ros:galactic-desktop
-```
-
-To check that you have succesfully pulled the image, run the following command:
-
-```Shell
-docker image ls | grep galactic
-```
-To run this image in Bash:
-
-```Shell
-docker run -it osrf/ros:galactic-desktop
-```
+> [!Warning]
+> Make sure that you choose the right OS, the right cuda version, and the right Distribution compatible with your system, in this specified order.
 
 ### Testing GUI availabity
 
