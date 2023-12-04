@@ -1,18 +1,18 @@
 # Childrens National Docker Environment
 
 ### Description
-This repo contains the instructions to setup the docker environment for the Kuka and Smart wheelchair projects. In theory, since we are using docker, the steps after installing docker should be the same for both windows and linux. Initially the steps shown in [this video](https://www.youtube.com/watch?v=qWuudNxFGOQ) (Also featured by ROS on their official documentation site) were followed, with the simple modification of ROS2 Galactic instead of [ROS2 Foxy](https://docs.ros.org/en/foxy/index.html). Moving ahead, the individual packages required for these projects can be found in their respective sections. As of the moment, while this project is in progress, the reason for opting to use ROS2 Galactic is it's high stability. We noticed that ROS2 Humble has issued loading URDF files.
+This repo contains the instructions to setup the docker environment for the Kuka and Smart wheelchair projects. In theory, since we are using docker, the steps after installing docker should be the same for both windows and linux. Moving ahead, the individual packages required for these projects can be found in their respective sections. There are branches for both [ROS2 Galactic](https://docs.ros.org/en/galactic/index.html) and [ROS2 Humble](https://docs.ros.org/en/humble/index.html).
 
 _Note:_ 
 - Docker installation instructions are provided below, while it is assumed that proper graphical drivers and CUDA for Nvidia GPUs are installed, the official instructions for which can be found [here](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/contents.html).
 
-- If performing a fresh install for Nvidia Drivers on Linux, it is strongly recommended to use the [Lambda Stack](https://lambdalabs.com/lambda-stack-deep-learning-software) by Lambda labs.
+- If performing a fresh install for Nvidia Drivers on Linux, it is strongly recommended to use the [Lambda Stack](https://lambdalabs.com/lambda-stack-deep-learning-software) by Lambda labs. They also have additional support for ngc containers which is used for these Docker environments.
 
 ## 1. System Software information
 
-The contents of this repo were tested on the following system (not all of it is relevant):
+The contents of this repo were tested on the following system:
 
- 1. _Operating System_ - Ubuntu 20.04 [Focal Fossa](https://releases.ubuntu.com/focal/)
+ 1. _Base Operating System_ - Ubuntu 20.04 [Focal Fossa](https://releases.ubuntu.com/focal/)
  2. _CPU_ - 11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz
  3. _GPU_
     - Model - RTX 3080 Mobile
@@ -20,7 +20,7 @@ The contents of this repo were tested on the following system (not all of it is 
     - CUDA Version - 12.2
  4. _RAM_ - 32GB
  5. _Docker version_ - 24.0.6
- 6. _ROS 2 Distro_ - [Galactic](https://docs.ros.org/en/galactic/index.html)
+ 6. _ROS 2 Distro_ - [Galactic](https://docs.ros.org/en/galactic/index.html) OR [Humble](https://docs.ros.org/en/humble/index.html) 
 
 ## 2. Installing Docker
 
@@ -35,7 +35,7 @@ After succesfully installing docker pull the custom docker image created by [All
 > Make sure that you choose the right OS, the right cuda version, and the right Distribution compatible with your system, in this specified order.
 
 > [!Important]
-> Galactic has reached End of Life (EOL) so there may be issues in the future such as Nvidia cuda image version mismatch. In the image provided by Allison Thackston uses CUDA 11.7. However, that version does not exist on Dockerhub (atleast not anyomre) and thus if you try to docker-run it directly, it will pop up with an error. Simplest method to counter this is to go to Nvidia's Dockerhub ([nvidia/cuda](https://hub.docker.com/r/nvidia/cuda)) and select the correct docker image.
+> Galactic has reached End of Life (EOL) so there may be issues in the future such as Nvidia cuda image version mismatch. In the image provided by Allison Thackston uses CUDA 11.7. However, that version does not exist on Dockerhub (atleast not anymore to my knowledge) and thus if you try to docker-run it directly, it will pop up with an error. Simplest method to counter this is to go to Nvidia's Dockerhub ([nvidia/cuda](https://hub.docker.com/r/nvidia/cuda)) and select the correct docker image.
 
 Pull the galactic image
 
@@ -51,18 +51,34 @@ Pull the galactic image
 
 For further uses we have assumed CUDA enabled systems.
 
-## 4. Running the dockerfile
+## 4. Building the docker image using the Dockerfile
 
-Either clone this entire repository or just download the provided Dockerfile.
+Depending on the distro you wish to use, navigate to the correct branch and clone it.
 
-After you have the Dockerfile locally stored on your machine, navigate to the location where you have that file and run the following command:
+Navigate into the scripts folder inside the cloned repo and run the following command
 
 ```Shell
-docker build -t ros2_galactic .
+docker build -t humble_cuda .
 ```
 
-Feel free to replace `ros2_galactic` with a name of your own choice, but also remeber to substitute it correctly in the commands that follow.
+you can replace `humble_cuda` with a name of your own choice, but also remeber to substitute it correctly in the commands that follow.
 
-## 5. Setting up the environment
+The following command will show docker images currently built and available on your host machine.
 
-After this point make a separate directory to store your [Dockerfile](https://docs.docker.com/engine/reference/builder/) and other scripts. There should be only 1 Dockerfile and it has no extensions like `.txt`, `.bash`, etc. For simplicity, clone this  entire project.
+```Shell
+docker image ls
+```
+
+## 5. Using the docker environment
+
+After creating the docker image, it is ready to use. The command for using this is as following:
+
+```Shell
+docker run -it --rm --name=humbdolt --gpus=all --net=host --pid=host --privileged --env="DISPLAY=$DISPLAY" --volume="$PWD/focal_galactic/ros2_ws:/home/${USER}/ros2_ws" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" humble_cuda
+```
+
+_Note_ : I'll be explaining these arguments eventually.
+
+## 6. Using the IIWA stack
+
+We use the (kind of) official [lbr-stack](https://github.com/lbr-stack/lbr_fri_ros2_stack/tree/humble). You don't need to download that but it needs to be built after starting the docker. The docker is started with `root` access by default.
