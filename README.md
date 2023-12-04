@@ -1,9 +1,7 @@
 # Childrens National Docker Environment
 
-Step 1: Clone this repo
-
 ### Description
-This repo contains the instructions to setup the docker environment for the Kuka and Smart wheelchair projects. In theory, since we are using docker, the steps after installing docker should be the same for both windows and linux. Initially the steps shown in [this video](https://www.youtube.com/watch?v=qWuudNxFGOQ) (Also featured by ROS on their official documentation site) were followed, with the simple modification of ROS2 Galactic instead of [ROS2 Foxy](https://docs.ros.org/en/foxy/index.html). Moving ahead, the individual packages required for these projects can be found in their respective sections. As of the moment, while this project is in progress, the reason for opting to use ROS2 Galactic is it's high stability. We noticed that ROS2 Humble has issued loading URDF files as 
+This repo contains the instructions to setup the docker environment for the Kuka and Smart wheelchair projects. In theory, since we are using docker, the steps after installing docker should be the same for both windows and linux. Initially the steps shown in [this video](https://www.youtube.com/watch?v=qWuudNxFGOQ) (Also featured by ROS on their official documentation site) were followed, with the simple modification of ROS2 Galactic instead of [ROS2 Foxy](https://docs.ros.org/en/foxy/index.html). Moving ahead, the individual packages required for these projects can be found in their respective sections. As of the moment, while this project is in progress, the reason for opting to use ROS2 Galactic is it's high stability. We noticed that ROS2 Humble has issued loading URDF files.
 
 _Note:_ 
 - Docker installation instructions are provided below, while it is assumed that proper graphical drivers and CUDA for Nvidia GPUs are installed, the official instructions for which can be found [here](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/contents.html).
@@ -29,7 +27,7 @@ The contents of this repo were tested on the following system (not all of it is 
 The official docker installation guide can be found [here](https://docs.docker.com/engine/install/).
 
 
-## 3. Downloading ROS 2 Docker image
+## 3. Downloading Ubuntu 20.04 with ROS 2 Docker image
 
 After succesfully installing docker pull the custom docker image created by [Allison Thackston](https://www.allisonthackston.com/) on [Dockerhub](https://hub.docker.com/r/althack/ros2).
 
@@ -53,27 +51,18 @@ Pull the galactic image
 
 For further uses we have assumed CUDA enabled systems.
 
+## 4. Running the dockerfile
 
-### Testing GUI availabity
+Either clone this entire repository or just download the provided Dockerfile.
 
-To check if your ROS2 image has GUI capacbility run the following command:
-
-```Shell
-ros2 run turtlesim turtlesim_node
-```
-
-On fresh installs and in cases that you do not have GUI functionalities, the following error pops up:
+After you have the Dockerfile locally stored on your machine, navigate to the location where you have that file and run the following command:
 
 ```Shell
-qt.qpa.xcb: could not connect to display 
-qt.qpa.plugin: Could not load the Qt platform plugin "xcb" in "" even though it was found.
-This application failed to start because no Qt platform plugin could be initialized. Reinstalling the application may fix this problem.
-
-Available platform plugins are: eglfs, linuxfb, minimal, minimalegl, offscreen, vnc, xcb.
+docker build -t ros2_galactic .
 ```
 
-This means that the turtlesim did simulate but there was no GUI so it exited.
+Feel free to replace `ros2_galactic` with a name of your own choice, but also remeber to substitute it correctly in the commands that follow.
 
-## 4. Setting up the environment
+## 5. Setting up the environment
 
 After this point make a separate directory to store your [Dockerfile](https://docs.docker.com/engine/reference/builder/) and other scripts. There should be only 1 Dockerfile and it has no extensions like `.txt`, `.bash`, etc. For simplicity, clone this  entire project.

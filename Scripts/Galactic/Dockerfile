@@ -149,17 +149,62 @@ RUN apt-get update \
   libxext6 \
   libx11-6
 
-# Env vars for the nvidia-container-runtime.
-ENV NVIDIA_VISIBLE_DEVICES all
-ENV NVIDIA_DRIVER_CAPABILITIES graphics,utility,compute
-ENV QT_X11_NO_MITSHM 1
-
-#Setting display
-ENV DISPLAY 0
-
+#Extra stuff not important
 RUN apt-get install mesa-utils
 RUN apt-get install libgl1-mesa-glx
 
 RUN apt-get update
 RUN sudo apt-get upgrade -y
 RUN apt-get dist-upgrade
+
+## Installing dependencies for moveit
+RUN apt install ros-galactic-eigen-stl-containers -y
+RUN apt install libgeometric-shapes-dev -y
+RUN pip install cmake --upgrade
+
+
+## Installing Moveit
+RUN apt install ros-galactic-moveit* -y
+
+RUN apt update && \
+    apt install -y libeigen3-dev
+RUN rosdep update
+
+
+## Installing I-Cube's iiwa package
+# RUN mkdir ros2_dev && \
+#     cd ros2_dev && \
+#     apt update && \
+#     apt upgrade -y && \
+#     git clone https://github.com/ICube-Robotics/iiwa_ros2 -b galactic && \
+#     cd iiwa_ros2 && \
+#     # ls && \
+#     # vcs import < iiwa_ros2.repos && \
+#     # . /opt/ros/${ROS_DISTRO}/setup.sh && \
+#     rosdep install --ignore-src --from-paths . -y -r && \
+#     colcon build --symlink-install
+# COPY ros_entrypoint.sh /ros_entrypoint.sh
+# RUN chmod 755 /ros_entrypoint.sh
+# ENTRYPOINT ["/ros_entrypoint.sh"]
+# CMD ["bash"]
+
+## Installing ROS Controls package
+RUN apt-get update && \
+    apt-get install -y ros-${ROS_DISTRO}-ros2-control ros-${ROS_DISTRO}-ros2-controllers&& \
+    rm -rf /var/lib/apt/lists/*
+
+## Env vars for the nvidia-container-runtime.
+ENV NVIDIA_VISIBLE_DEVICES all
+ENV NVIDIA_DRIVER_CAPABILITIES graphics,utility,compute
+ENV QT_X11_NO_MITSHM 1
+
+## Setting display
+ENV DISPLAY 0
+
+## Install lbr iiwa stack
+RUN mkdir -p lbr_fri_ros2_stack_ws/src && cd lbr_fri_ros2_stack_ws
+RUN wget https://raw.githubusercontent.com/KCL-BMEIS/lbr_fri_ros2_stack/galactic/lbr_fri_ros2_stack/repos.yml -P src
+RUN vcs import src < src/repos.yml
+RUN rosdep install --from-paths src --ignore-src -r -y
+# RUN apt-get update && apt-get upgrade -y
+RUN colcon build
