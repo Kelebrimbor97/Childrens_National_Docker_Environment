@@ -27,17 +27,19 @@ The contents of this repo were tested on the following system:
 The official docker installation guide can be found [here](https://docs.docker.com/engine/install/).
 
 
-## 3. Downloading Ubuntu 20.04 with ROS 2 Docker image
+## 3. Downloading Ubuntu 20.04/22.04 with ROS 2 Docker image
 
 After succesfully installing docker pull the custom docker image created by [Allison Thackston](https://www.allisonthackston.com/) on [Dockerhub](https://hub.docker.com/r/althack/ros2).
 
 > [!Warning]
 > Make sure that you choose the right OS, the right cuda version, and the right Distribution compatible with your system, in this specified order.
+> 1. Ubuntu 20.04 - ROS Galactic
+> 2. Ubuntu 22.04 - ROS Humble
 
 > [!Important]
-> Galactic has reached End of Life (EOL) so there may be issues in the future such as Nvidia cuda image version mismatch. In the image provided by Allison Thackston uses CUDA 11.7. However, that version does not exist on Dockerhub (atleast not anymore to my knowledge) and thus if you try to docker-run it directly, it will pop up with an error. Simplest method to counter this is to go to Nvidia's Dockerhub ([nvidia/cuda](https://hub.docker.com/r/nvidia/cuda)) and select the correct docker image.
+> Galactic has reached End of Life (EOL) so there may be issues in the future such as Nvidia CUDA image version mismatch. In the image provided by Allison Thackston uses CUDA 11.7. However, that version does not exist on Dockerhub (atleast not anymore to my knowledge) and thus if you try to docker-run it directly, it will pop up with an error. Simplest method to counter this is to go to Nvidia's Dockerhub ([nvidia/cuda](https://hub.docker.com/r/nvidia/cuda)) and select the correct docker image.
 
-Pull the galactic image
+### 1. Pulling the galactic image
 
    1. If you **have** CUDA enabled GPU:
       ```Shell
@@ -49,7 +51,19 @@ Pull the galactic image
       docker pull althack/ros2:galactic-gazebo-2022-12-01
       ``` 
 
-For further uses we have assumed CUDA enabled systems.
+### 2. Pulling the Humble image
+
+   1. If you **have** CUDA enabled GPU:
+      ```Shell
+      docker pull althack/ros2:humble-cuda-full-2024-02-01
+      ```
+
+   2. If you **DON'T have** CUDA enabled GPU:
+      ```Shell
+      docker pull althack/ros2:humble-full-2024-02-01
+      ```
+> [!Note]
+> For further uses we have assumed **CUDA enabled systems with a Humble installation**.
 
 ## 4. Building the docker image using the Dockerfile
 
