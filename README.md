@@ -102,6 +102,6 @@ docker run -it --rm --name=<CONTAINER_NAME> --gpus=all --net=host --pid=host --p
 
 >[!Note]I'll be explaining these arguments eventually.
 
-## 6. Using the IIWA stack
+<!-- ## 6. Using the IIWA stack
 
-We use the (kind of) official [lbr-stack](https://github.com/lbr-stack/lbr_fri_ros2_stack/tree/humble). You don't need to download that but it needs to be built after starting the docker. The docker is started with `root` access by default.
+We use the (kind of) official [lbr-stack](https://github.com/lbr-stack/lbr_fri_ros2_stack/tree/humble). You don't need to download that but it needs to be built after starting the docker. The docker is started with `root` access by default. -->
