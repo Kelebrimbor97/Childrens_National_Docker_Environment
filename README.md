@@ -7,9 +7,14 @@ This repo contains the instructions to setup the docker environment for the Kuka
 >- Docker installation instructions are provided below, while it is assumed that proper graphical drivers and CUDA for Nvidia GPUs are installed, the official instructions for which can be found [here](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/contents.html).
 >- If performing a fresh install for Nvidia Drivers on Linux, it is strongly recommended to use the [Lambda Stack](https://lambdalabs.com/lambda-stack-deep-learning-software) by Lambda labs. They also have additional support for ngc containers which is used for these Docker environments.
 
-## 1. System Software information
+## 1. Requirements
 
-The contents of this repo were tested on the following system:
+The following packages need to be installed on your base machine:
+
+1. **Linux** - Any flavor works. We use Ubuntu, specifically,  20.04
+2. **Docker** - Installation instructions can be found [here](https://docs.docker.com/engine/install/).
+3. **Nvidia GPU Drivers** _(Recommended)_ - Although you can install the driver separately, I would highly recommend using Lambda Stack as mentioned above.
+<!-- The contents of this repo were tested on the following system:
 
  1. _Base Operating System_ - Ubuntu 20.04 [Focal Fossa](https://releases.ubuntu.com/focal/)
  2. _CPU_ - 11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz
@@ -19,14 +24,9 @@ The contents of this repo were tested on the following system:
     - CUDA Version - 12.2
  4. _RAM_ - 32GB
  5. _Docker version_ - 24.0.6
- 6. _ROS 2 Distro_ - [Galactic](https://docs.ros.org/en/galactic/index.html) OR [Humble](https://docs.ros.org/en/humble/index.html) 
+ 6. _ROS 2 Distro_ - [Galactic](https://docs.ros.org/en/galactic/index.html) OR [Humble](https://docs.ros.org/en/humble/index.html)  -->
 
-## 2. Installing Docker
-
-The official docker installation guide can be found [here](https://docs.docker.com/engine/install/).
-
-
-## 3. Downloading Ubuntu 20.04/22.04 with ROS 2 Docker image
+## 2. Downloading Ubuntu 20.04/22.04 with ROS 2 Docker image
 
 After succesfully installing docker pull the custom docker image created by [Allison Thackston](https://www.allisonthackston.com/) on [Dockerhub](https://hub.docker.com/r/althack/ros2).
 
@@ -64,7 +64,7 @@ After succesfully installing docker pull the custom docker image created by [All
 > [!Note]
 > For further uses we have assumed **CUDA enabled systems with a Humble installation**.
 
-## 4. Building the docker images using the Dockerfile
+## 3. Building the docker images using the Dockerfile
 
    ### 1. Building the base Ubuntu-ROS2 image
 
@@ -92,7 +92,7 @@ After succesfully installing docker pull the custom docker image created by [All
    docker build -t <PROJECT_IMAGE _NAME> .
    ``` 
 
-## 5. Using the docker environment
+## 4. Using the docker environment
 
 After creating the docker image, it is ready to use. The command for using this is as following:
 
