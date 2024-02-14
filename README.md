@@ -3,10 +3,9 @@
 ### Description
 This repo contains the instructions to setup the docker environment for the Kuka and Smart wheelchair projects. In theory, since we are using docker, the steps after installing docker should be the same for both windows and linux. Moving ahead, the individual packages required for these projects can be found in their respective sections. There are branches for both [ROS2 Galactic](https://docs.ros.org/en/galactic/index.html) and [ROS2 Humble](https://docs.ros.org/en/humble/index.html).
 
-_Note:_ 
-- Docker installation instructions are provided below, while it is assumed that proper graphical drivers and CUDA for Nvidia GPUs are installed, the official instructions for which can be found [here](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/contents.html).
-
-- If performing a fresh install for Nvidia Drivers on Linux, it is strongly recommended to use the [Lambda Stack](https://lambdalabs.com/lambda-stack-deep-learning-software) by Lambda labs. They also have additional support for ngc containers which is used for these Docker environments.
+>[!Note]
+>- Docker installation instructions are provided below, while it is assumed that proper graphical drivers and CUDA for Nvidia GPUs are installed, the official instructions for which can be found [here](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/contents.html).
+>- If performing a fresh install for Nvidia Drivers on Linux, it is strongly recommended to use the [Lambda Stack](https://lambdalabs.com/lambda-stack-deep-learning-software) by Lambda labs. They also have additional support for ngc containers which is used for these Docker environments.
 
 ## 1. System Software information
 
@@ -39,7 +38,7 @@ After succesfully installing docker pull the custom docker image created by [All
 > [!Important]
 > Galactic has reached End of Life (EOL) so there may be issues in the future such as Nvidia CUDA image version mismatch. In the image provided by Allison Thackston uses CUDA 11.7. However, that version does not exist on Dockerhub (atleast not anymore to my knowledge) and thus if you try to docker-run it directly, it will pop up with an error. Simplest method to counter this is to go to Nvidia's Dockerhub ([nvidia/cuda](https://hub.docker.com/r/nvidia/cuda)) and select the correct docker image.
 
-### 1. Pulling the galactic image
+### A. Pulling the galactic image
 
    1. If you **have** CUDA enabled GPU:
       ```Shell
@@ -51,7 +50,7 @@ After succesfully installing docker pull the custom docker image created by [All
       docker pull althack/ros2:galactic-gazebo-2022-12-01
       ``` 
 
-### 2. Pulling the Humble image
+### B. Pulling the Humble image
 
    1. If you **have** CUDA enabled GPU:
       ```Shell
@@ -65,33 +64,43 @@ After succesfully installing docker pull the custom docker image created by [All
 > [!Note]
 > For further uses we have assumed **CUDA enabled systems with a Humble installation**.
 
-## 4. Building the docker image using the Dockerfile
+## 4. Building the docker images using the Dockerfile
 
-Depending on the distro you wish to use, navigate to the correct branch and clone it.
+   ### 1. Building the base Ubuntu-ROS2 image
 
-Navigate into the scripts folder inside the cloned repo and run the following command
+   Depending on the distro you wish to use, navigate to the correct branch and clone it.
 
-```Shell
-docker build -t humble_cuda .
-```
+   Navigate into the `Scripts` folder inside the cloned repo and run the following command
 
-you can replace `humble_cuda` with a name of your own choice, but also remeber to substitute it correctly in the commands that follow.
+   ```Shell
+   docker build -t <BASE_IMAGE_NAME> .
+   ```
 
-The following command will show docker images currently built and available on your host machine.
+   you can replace `BASE_IMAGE_NAME` with a name of your own choice, but also remeber to substitute it correctly in the commands that follow.
 
-```Shell
-docker image ls
-```
+   The following command will show docker images currently built and available on your host machine.
+
+   ```Shell
+   docker image ls
+   ```
+
+   ### 2. Building the project specific docker images
+
+   Now that you have a base image built, it is time to build a project specific image that uses the above image as a base image. For this navigate to the project for which you wish to create an image for. And again, we build it:
+
+   ```Shell
+   docker build -t <PROJECT_IMAGE _NAME> .
+   ``` 
 
 ## 5. Using the docker environment
 
 After creating the docker image, it is ready to use. The command for using this is as following:
 
 ```Shell
-docker run -it --rm --name=humbdolt --gpus=all --net=host --pid=host --privileged --env="DISPLAY=$DISPLAY" --volume="$PWD/focal_galactic/ros2_ws:/home/${USER}/ros2_ws" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" humble_cuda
+docker run -it --rm --name=<CONTAINER_NAME> --gpus=all --net=host --pid=host --privileged --env="DISPLAY=$DISPLAY" --volume="$PWD/<WORKSPACE_NAME>/ros2_ws:/home/${USER}/ros2_ws" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" <IMAGE_NAME>
 ```
 
-_Note_ : I'll be explaining these arguments eventually.
+>[!Note]I'll be explaining these arguments eventually.
 
 ## 6. Using the IIWA stack
 
