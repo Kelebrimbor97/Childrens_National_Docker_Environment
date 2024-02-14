@@ -147,45 +147,75 @@ RUN apt-get update \
   libxext6 \
   libx11-6
 
-#Everything from this point is unique to this project
-RUN apt-get update
-RUN apt-get upgrade -y
-RUN apt-get dist-upgrade -y
 
-#Install dependencies for moveit
-RUN apt install ros-humble-eigen-stl-containers -y
-RUN apt install libgeometric-shapes-dev -y
-RUN pip install cmake --upgrade
+# #Everything from this point is unique to this project
+# RUN apt-get update
+# RUN apt-get upgrade -y
+# RUN apt-get dist-upgrade -y
 
-# #Installing moveit - moveit official method
-# RUN git clone https://github.com/ros-planning/moveit2.git -b $ROS_DISTRO
-# RUN for repo in moveit2/moveit2.repos $(f="moveit2/moveit2_$ROS_DISTRO.repos"; test -r $f && echo $f); do vcs import < "$repo"; done
+# #Install dependencies for moveit
+# RUN apt install ros-humble-eigen-stl-containers -y
+# RUN apt install libgeometric-shapes-dev -y
+# RUN pip install cmake --upgrade
+
+# # #Installing moveit - moveit official method
+# # RUN git clone https://github.com/ros-planning/moveit2.git -b $ROS_DISTRO
+# # RUN for repo in moveit2/moveit2.repos $(f="moveit2/moveit2_$ROS_DISTRO.repos"; test -r $f && echo $f); do vcs import < "$repo"; done
+# # RUN rosdep update
+# # RUN rosdep install -r --from-paths . --ignore-src --rosdistro $ROS_DISTRO -y
+
+# # Install moveit quick method
+# RUN apt install ros-humble-moveit* -y
+
+# RUN apt update && \
+#     apt install -y libeigen3-dev
 # RUN rosdep update
-# RUN rosdep install -r --from-paths . --ignore-src --rosdistro $ROS_DISTRO -y
 
+# ## Installing ROS Controls package
+# RUN apt-get update && \
+#     apt-get install -y ros-${ROS_DISTRO}-ros2-control ros-${ROS_DISTRO}-ros2-controllers&& \
+#     rm -rf /var/lib/apt/lists/*
 
-# Install moveit quick method
-RUN apt install ros-humble-moveit* -y
+# # Installing the RP2040 controller environment
 
-RUN apt update && \
-    apt install -y libeigen3-dev
-RUN rosdep update
+# # RUN apt-get remove binutils-arm-none-eabi gcc-arm-none-eabi
+# # RUN add-apt-repository ppa:team-gcc-arm-embedded/ppa
+# RUN apt-get update
+# RUN apt-get upgrade
+# RUN apt-get install gcc-arm-none-eabi -y
+# RUN apt-get install gdb-arm-none-eabi -y
+# RUN git clone --recursive https://github.com/CNHGit/DiffDriveBaseControlelr_RP2040
+# RUN cd DiffDriveBaseControlelr_RP2040 && \
+#     git submodule update --init --recursive && \
+#     cmake -S . -B build/ && \
+#     cmake --build build
+# ## After this other steps are for deploying the app onto the ucontroller
 
-## Installing ROS Controls package
-RUN apt-get update && \
-    apt-get install -y ros-${ROS_DISTRO}-ros2-control ros-${ROS_DISTRO}-ros2-controllers&& \
-    rm -rf /var/lib/apt/lists/*
+# # #Install the wheelchair repo
+# # RUN cd ~ && \
+# #     git clone --recurse-submodules https://github.com/CNHGit/WheelChair.git && \
+# #     cd src && \
+# #     git clone https://github.com/RoverRobotics-forks/serial-ros2.git && \
+# #     cd .. && \
+# #     cd WheelChair && \
+# #     colcon build && \
+# #     # cmake --build build/ && \
+# #     # ls WheelChair && \
+# #     cmake --build .build --clean-first
+#     # cmake --build build/ --verbose && \
+#     # rm -rf build
 
-# Installing KUKA lbr-stack
-RUN rosdep update
-RUN apt-get update
-RUN apt-get upgrade -y
-COPY iiwa_installer.sh /opt/src/scripts/setup.sh
-RUN chmod +x /opt/src/scripts/setup.sh
-RUN . /opt/src/scripts/setup.sh
-# RUN source opt/ros/humble/setup.bash
-# RUN colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release --symlink-install
-# RUN /bin/bash -c "/opt/src/src/scripts/setup.sh"
+# # # Installing KUKA lbr-stack
+# # RUN rosdep update
+# # RUN apt-get update
+# # RUN apt-get upgrade -y
+# # COPY iiwa_installer.sh /opt/src/scripts/setup.sh
+# # RUN chmod +x /opt/src/scripts/setup.sh
+# # RUN . /opt/src/scripts/setup.sh
+# # RUN source opt/ros/humble/setup.bash
+# # RUN colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release --symlink-install
+# # RUN /bin/bash -c "/opt/src/src/scripts/setup.sh"
+
 # Env vars for the nvidia-container-runtime.
 ENV NVIDIA_VISIBLE_DEVICES all
 ENV NVIDIA_DRIVER_CAPABILITIES graphics,utility,compute

@@ -193,6 +193,16 @@ RUN apt-get update && \
     apt-get install -y ros-${ROS_DISTRO}-ros2-control ros-${ROS_DISTRO}-ros2-controllers&& \
     rm -rf /var/lib/apt/lists/*
 
+## Install lbr iiwa stack
+RUN mkdir -p lbr_fri_ros2_stack_ws/src && \
+    cd lbr_fri_ros2_stack_ws &&\
+    wget https://raw.githubusercontent.com/KCL-BMEIS/lbr_fri_ros2_stack/galactic/lbr_fri_ros2_stack/repos.yml -P src &&\
+    vcs import src < src/repos.yml &&\
+    source /opt/ros/galactic/setup.bash &&\
+    rosdep install --from-paths src --ignore-src -r -y &&\
+    colcon build
+# RUN apt-get update && apt-get upgrade -y
+
 ## Env vars for the nvidia-container-runtime.
 ENV NVIDIA_VISIBLE_DEVICES all
 ENV NVIDIA_DRIVER_CAPABILITIES graphics,utility,compute
@@ -200,11 +210,3 @@ ENV QT_X11_NO_MITSHM 1
 
 ## Setting display
 ENV DISPLAY 0
-
-## Install lbr iiwa stack
-RUN mkdir -p lbr_fri_ros2_stack_ws/src && cd lbr_fri_ros2_stack_ws
-RUN wget https://raw.githubusercontent.com/KCL-BMEIS/lbr_fri_ros2_stack/galactic/lbr_fri_ros2_stack/repos.yml -P src
-RUN vcs import src < src/repos.yml
-RUN rosdep install --from-paths src --ignore-src -r -y
-# RUN apt-get update && apt-get upgrade -y
-RUN colcon build
