@@ -57,7 +57,7 @@ RUN cd DiffDriveBaseControlelr_RP2040 && \
     # target_compile_options(${PROJECT_NAME} PRIVATE -fPIC)
 
 
-# #Install the wheelchair repo
+# Install the wheelchair repo
 RUN cd ~ && \
     git clone --recurse-submodules https://github.com/CNHGit/WheelChair.git
 
@@ -71,6 +71,25 @@ RUN cd ~/WheelChair/src/serial-ros2 && \
 RUN cd ~/WheelChair && \
     colcon build && \
     rm -rf build
+
+RUN apt-get install usbutils fdisk -y
+
+
+# Install librealsense
+RUN mkdir -p /etc/apt/keyrings
+RUN curl -sSf https://librealsense.intel.com/Debian/librealsense.pgp | sudo tee /etc/apt/keyrings/librealsense.pgp > /dev/null
+
+RUN echo "deb [signed-by=/etc/apt/keyrings/librealsense.pgp] https://librealsense.intel.com/Debian/apt-repo `lsb_release -cs` main" | \
+tee /etc/apt/sources.list.d/librealsense.list
+
+RUN apt-get update
+RUN apt-get install librealsense2-dkms -y
+RUN apt-get install librealsense2-utils -y
+RUN apt-get install librealsense2-dev -y
+RUN apt-get install librealsense2-dbg -y
+RUN apt install ros-humble-realsense2-* -y
+
+RUN pip install pyrealsense2
     # cmake --build build/ && \
     # ls WheelChair && \
 #     cmake --build .build --clean-first
