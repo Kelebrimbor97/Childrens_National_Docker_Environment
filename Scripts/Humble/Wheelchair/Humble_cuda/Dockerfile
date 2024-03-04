@@ -90,6 +90,15 @@ RUN apt-get install librealsense2-dbg -y
 RUN apt install ros-humble-realsense2-* -y
 
 RUN pip install pyrealsense2
+
+#Install Cartographer
+RUN apt-get update
+RUN apt-get install -y python3-wstool python3-rosdep ninja-build stow
+RUN sudo apt install ros-$ROS_DISTRO-cartographer
+RUN sudo apt install ros-$ROS_DISTRO-cartographer-ros
+
+#Install RPLidar
+
     # cmake --build build/ && \
     # ls WheelChair && \
 #     cmake --build .build --clean-first
