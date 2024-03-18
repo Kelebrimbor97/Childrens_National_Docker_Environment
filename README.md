@@ -72,8 +72,6 @@ After succesfully installing docker pull the custom docker image created by [All
    The current structure of this repo looks as shown below.
 
    ```bash
-
-
    ├── humble_cuda
    │   └── ros2_ws
    ├── Images
@@ -157,7 +155,8 @@ After creating the docker image, it is ready to use. The command for using this 
 docker run -it --rm --name=<CONTAINER_NAME> --gpus=all --net=host --pid=host --privileged --env="DISPLAY=$DISPLAY" --volume="$PWD/<WORKSPACE_NAME>/ros2_ws:/home/${USER}/ros2_ws" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" <IMAGE_NAME>
 ```
 
->[!Note]I'll be explaining these arguments eventually.
+>[!Note]
+>- I'll be explaining these arguments eventually.
 
 <!-- ## 6. Using the IIWA stack
 
