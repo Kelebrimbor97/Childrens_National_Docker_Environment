@@ -117,8 +117,6 @@ After succesfully installing docker pull the custom docker image created by [All
     └── Dockerfile
 ```
 
-
-
    Navigate into the `Scripts` folder inside the cloned repo and run the following command
 
    ```Shell
@@ -126,6 +124,17 @@ After succesfully installing docker pull the custom docker image created by [All
    ```
 
    you can replace `BASE_IMAGE_NAME` with a name of your own choice, but also remeber to substitute it correctly in the commands that follow.
+
+   #### A. For cpu install
+
+   ```Shell
+   docker build -t humble_cpu .
+   ```
+   #### B. For CUDA install
+
+   ```Shell
+   docker build -t humble_cuda .
+   ``` 
 
    The following command will show docker images currently built and available on your host machine.
 
