@@ -38,6 +38,6 @@ RUN apt-get upgrade -y
 COPY iiwa_installer.sh /opt/src/scripts/setup.sh
 RUN chmod +x /opt/src/scripts/setup.sh
 RUN . /opt/src/scripts/setup.sh
-RUN source /opt/ros/humble/setup.bash
-RUN colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release --symlink-install
-RUN /bin/bash -c "/opt/src/src/scripts/setup.sh"
+# RUN source /opt/ros/humble/setup.bash
+# RUN colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release --symlink-install
+# RUN /bin/bash -c "/opt/src/src/scripts/setup.sh"
