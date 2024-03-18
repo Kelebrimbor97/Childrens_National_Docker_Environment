@@ -12,7 +12,8 @@ This repo contains the instructions to setup the docker environment for the Kuka
 The following packages need to be installed on your base machine:
 
 1. **Linux** - Any flavor works. We use Ubuntu, specifically,  20.04
-2. **Docker** - Installation instructions can be found [here](https://docs.docker.com/engine/install/).
+<!-- 2. **Docker** - Installation instructions can be found [here](https://docs.docker.com/engine/install/). -->
+3. **Docker** - Simply run the command ``` sudo apt-get install docker ```
 3. **Nvidia GPU Drivers** _(Recommended)_ - Although you can install the driver separately, I would highly recommend using Lambda Stack as mentioned above.
 <!-- The contents of this repo were tested on the following system:
 
@@ -26,7 +27,7 @@ The following packages need to be installed on your base machine:
  5. _Docker version_ - 24.0.6
  6. _ROS 2 Distro_ - [Galactic](https://docs.ros.org/en/galactic/index.html) OR [Humble](https://docs.ros.org/en/humble/index.html)  -->
 
-## 2. Downloading Ubuntu 20.04/22.04 with ROS 2 Docker image
+<!-- ## 2. Downloading Ubuntu 20.04/22.04 with ROS 2 Docker image
 
 After succesfully installing docker pull the custom docker image created by [Allison Thackston](https://www.allisonthackston.com/) on [Dockerhub](https://hub.docker.com/r/althack/ros2).
 
@@ -62,13 +63,61 @@ After succesfully installing docker pull the custom docker image created by [All
       docker pull althack/ros2:humble-full-2024-02-01
       ```
 > [!Note]
-> For further uses we have assumed **CUDA enabled systems with a Humble installation**.
+> For further uses we have assumed **CUDA enabled systems with a Humble installation**. -->
 
-## 3. Building the docker images using the Dockerfile
+## 2. Building the docker images using the Dockerfile
 
    ### 1. Building the base Ubuntu-ROS2 image
+   Clone this repo. Depending on the distro you wish to use, navigate to the correct folder.
 
-   Depending on the distro you wish to use, navigate to the correct branch and clone it.
+   The current structure of this repo looks as shown below.
+
+   ```bash
+
+
+├── humble_cuda
+│   └── ros2_ws
+├── Images
+│   └── gazebo_docker.png
+├── README.md
+├── Scripts
+│   ├── focal_galactic
+│   │   └── ros2_ws
+│   ├── Galactic
+│   │   ├── Dockerfile
+│   │   ├── focal_galactic
+│   │   │   └── ros2_ws
+│   │   ├── KUKA
+│   │   ├── ros_entrypoint.sh
+│   │   ├── Table.stl
+│   │   └── Wheelchair
+│   ├── Humble
+│   │   ├── cpu
+│   │   │   └── Dockerfile
+│   │   ├── cuda
+│   │   │   └── Dockerfile
+│   │   ├── focal_galactic
+│   │   │   └── ros2_ws
+│   │   ├── humble_cuda
+│   │   │   └── ros2_ws
+│   │   ├── KUKA
+│   │   │   ├── Dockerfile
+│   │   │   └── iiwa_installer.sh
+│   │   ├── ros_entrypoint.sh
+│   │   ├── Table.stl
+│   │   └── Wheelchair
+│   │       ├── Humble_cpu
+│   │       │   └── Dockerfile
+│   │       ├── humble_cuda
+│   │       │   └── ros2_ws
+│   │       └── Humble_cuda
+│   │           └── Dockerfile
+│   └── run_gpu.bash
+└── Tej_Docker
+    └── Dockerfile
+```
+
+
 
    Navigate into the `Scripts` folder inside the cloned repo and run the following command
 
