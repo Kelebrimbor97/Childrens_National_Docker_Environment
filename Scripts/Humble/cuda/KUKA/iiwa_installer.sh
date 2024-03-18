@@ -5,5 +5,6 @@ source opt/ros/humble/setup.bash
 rosdep install --from-paths src --ignore-src -r -y
 source /opt/ros/humble/setup.bash
 echo "source /opt/ros/humble/setup.bash">>~/.bashrc
-# colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release --symlink-install
+colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release --symlink-install
+/bin/bash -c "/opt/src/src/scripts/setup.sh"
 exec "$@"
