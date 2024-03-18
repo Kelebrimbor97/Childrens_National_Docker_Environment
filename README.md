@@ -72,46 +72,51 @@ After succesfully installing docker pull the custom docker image created by [All
    The current structure of this repo looks as shown below.
 
    ```bash
-   ├── humble_cuda
-   │   └── ros2_ws
-   ├── Images
-   │   └── gazebo_docker.png
-   ├── README.md
-   ├── Scripts
-   │   ├── focal_galactic
-   │   │   └── ros2_ws
-   │   ├── Galactic
-   │   │   ├── Dockerfile
-   │   │   ├── focal_galactic
-   │   │   │   └── ros2_ws
-   │   │   ├── KUKA
-   │   │   ├── ros_entrypoint.sh
-   │   │   ├── Table.stl
-   │   │   └── Wheelchair
-   │   ├── Humble
-   │   │   ├── cpu
-   │   │   │   └── Dockerfile
-   │   │   ├── cuda
-   │   │   │   └── Dockerfile
-   │   │   ├── focal_galactic
-   │   │   │   └── ros2_ws
-   │   │   ├── humble_cuda
-   │   │   │   └── ros2_ws
-   │   │   ├── KUKA
-   │   │   │   ├── Dockerfile
-   │   │   │   └── iiwa_installer.sh
-   │   │   ├── ros_entrypoint.sh
-   │   │   ├── Table.stl
-   │   │   └── Wheelchair
-   │   │       ├── Humble_cpu
-   │   │       │   └── Dockerfile
-   │   │       ├── humble_cuda
-   │   │       │   └── ros2_ws
-   │   │       └── Humble_cuda
-   │   │           └── Dockerfile
-   │   └── run_gpu.bash
-   └── Tej_Docker
-      └── Dockerfile
+   .
+├── humble_cuda
+│   └── ros2_ws
+├── Images
+│   └── gazebo_docker.png
+├── README.md
+├── Scripts
+│   ├── focal_galactic
+│   │   └── ros2_ws
+│   ├── Galactic
+│   │   ├── Dockerfile
+│   │   ├── focal_galactic
+│   │   │   └── ros2_ws
+│   │   ├── KUKA
+│   │   ├── ros_entrypoint.sh
+│   │   ├── Table.stl
+│   │   └── Wheelchair
+│   ├── Humble
+│   │   ├── cpu
+│   │   │   ├── Dockerfile
+│   │   │   ├── KUKA
+│   │   │   │   ├── Dockerfile
+│   │   │   │   └── iiwa_installer.sh
+│   │   │   └── Wheelchair
+│   │   │       └── Dockerfile
+│   │   ├── cuda
+│   │   │   ├── Dockerfile
+│   │   │   ├── KUKA
+│   │   │   │   ├── Dockerfile
+│   │   │   │   └── iiwa_installer.sh
+│   │   │   └── Wheelchair
+│   │   │       └── Dockerfile
+│   │   ├── focal_galactic
+│   │   │   └── ros2_ws
+│   │   ├── humble_cuda
+│   │   │   └── ros2_ws
+│   │   ├── ros_entrypoint.sh
+│   │   ├── Table.stl
+│   │   └── Wheelchair
+│   │       └── humble_cuda
+│   │           └── ros2_ws
+│   └── run_gpu.bash
+└── Tej_Docker
+    └── Dockerfile
+
    ```
 
    Navigate into the `Scripts` folder inside the cloned repo and run the following command
