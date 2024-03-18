@@ -12,8 +12,7 @@ This repo contains the instructions to setup the docker environment for the Kuka
 The following packages need to be installed on your base machine:
 
 1. **Linux** - Any flavor works. We use Ubuntu, specifically,  20.04
-<!-- 2. **Docker** - Installation instructions can be found [here](https://docs.docker.com/engine/install/). -->
-3. **Docker** - Simply run the command ``` sudo apt-get install docker ```
+2. **Docker** - Installation instructions can be found [here](https://docs.docker.com/engine/install/). Make sure that you also follow the post-installation instructions to ensure a smoothe experience where you don't have to constantly add `sudo` for every docker command.
 3. **Nvidia GPU Drivers** _(Recommended)_ - Although you can install the driver separately, I would highly recommend using Lambda Stack as mentioned above.
 <!-- The contents of this repo were tested on the following system:
 
@@ -75,47 +74,47 @@ After succesfully installing docker pull the custom docker image created by [All
    ```bash
 
 
-├── humble_cuda
-│   └── ros2_ws
-├── Images
-│   └── gazebo_docker.png
-├── README.md
-├── Scripts
-│   ├── focal_galactic
-│   │   └── ros2_ws
-│   ├── Galactic
-│   │   ├── Dockerfile
-│   │   ├── focal_galactic
-│   │   │   └── ros2_ws
-│   │   ├── KUKA
-│   │   ├── ros_entrypoint.sh
-│   │   ├── Table.stl
-│   │   └── Wheelchair
-│   ├── Humble
-│   │   ├── cpu
-│   │   │   └── Dockerfile
-│   │   ├── cuda
-│   │   │   └── Dockerfile
-│   │   ├── focal_galactic
-│   │   │   └── ros2_ws
-│   │   ├── humble_cuda
-│   │   │   └── ros2_ws
-│   │   ├── KUKA
-│   │   │   ├── Dockerfile
-│   │   │   └── iiwa_installer.sh
-│   │   ├── ros_entrypoint.sh
-│   │   ├── Table.stl
-│   │   └── Wheelchair
-│   │       ├── Humble_cpu
-│   │       │   └── Dockerfile
-│   │       ├── humble_cuda
-│   │       │   └── ros2_ws
-│   │       └── Humble_cuda
-│   │           └── Dockerfile
-│   └── run_gpu.bash
-└── Tej_Docker
-    └── Dockerfile
-```
+   ├── humble_cuda
+   │   └── ros2_ws
+   ├── Images
+   │   └── gazebo_docker.png
+   ├── README.md
+   ├── Scripts
+   │   ├── focal_galactic
+   │   │   └── ros2_ws
+   │   ├── Galactic
+   │   │   ├── Dockerfile
+   │   │   ├── focal_galactic
+   │   │   │   └── ros2_ws
+   │   │   ├── KUKA
+   │   │   ├── ros_entrypoint.sh
+   │   │   ├── Table.stl
+   │   │   └── Wheelchair
+   │   ├── Humble
+   │   │   ├── cpu
+   │   │   │   └── Dockerfile
+   │   │   ├── cuda
+   │   │   │   └── Dockerfile
+   │   │   ├── focal_galactic
+   │   │   │   └── ros2_ws
+   │   │   ├── humble_cuda
+   │   │   │   └── ros2_ws
+   │   │   ├── KUKA
+   │   │   │   ├── Dockerfile
+   │   │   │   └── iiwa_installer.sh
+   │   │   ├── ros_entrypoint.sh
+   │   │   ├── Table.stl
+   │   │   └── Wheelchair
+   │   │       ├── Humble_cpu
+   │   │       │   └── Dockerfile
+   │   │       ├── humble_cuda
+   │   │       │   └── ros2_ws
+   │   │       └── Humble_cuda
+   │   │           └── Dockerfile
+   │   └── run_gpu.bash
+   └── Tej_Docker
+      └── Dockerfile
+   ```
 
    Navigate into the `Scripts` folder inside the cloned repo and run the following command
 
