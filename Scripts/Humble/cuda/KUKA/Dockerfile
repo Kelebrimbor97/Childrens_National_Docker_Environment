@@ -19,7 +19,9 @@ RUN pip install cmake --upgrade
 # RUN rosdep install -r --from-paths . --ignore-src --rosdistro $ROS_DISTRO -y
 
 # Install moveit quick method
-RUN apt install ros-humble-moveit* -y
+RUN apt install ros-humble-moveit -y
+RUN apt install ros-$ROS_DISTRO-rmw-cyclonedds-cpp -y
+RUN export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 
 RUN apt update && \
     apt install -y libeigen3-dev
@@ -32,6 +34,30 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Installing KUKA lbr-stack
+
+# SHELL ["/bin/bash", "-c"]
+
+# ARG FRI_CLIENT_VERSION=1.15
+
+# RUN apt update
+# RUN apt upgrade -y
+
+# # create workspace
+# RUN mkdir -p home/ros2_ws/src
+# WORKDIR /home/ros2_ws/
+
+# COPY ./ /home/ros2_ws/src
+# RUN rosdep install -i --from-paths src --rosdistro ${ROS_DISTRO} -y 
+
+# # "--symlink-install" allows the code in the locally mounted volume ./src to be adjusted without rebuilding
+# RUN source /opt/ros/${ROS_DISTRO}/setup.bash && \
+#     colcon build --symlink-install --cmake-args -DFRI_CLIENT_VERSION=${FRI_CLIENT_VERSION} --no-warn-unused-cli
+
+# # source the workspace
+# RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc
+# RUN source /home/ros2_ws/install/local_setup.bash && echo "source /home/ros2_ws/install/local_setup.bash" >> ~/.bashrc
+# CMD ["/bin/bash"]
+
 RUN rosdep update
 RUN apt-get update
 RUN apt-get upgrade -y
