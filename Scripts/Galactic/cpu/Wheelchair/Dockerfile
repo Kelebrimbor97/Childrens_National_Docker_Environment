@@ -1,7 +1,7 @@
 #Using the GUI enabled image as BASE we create a separate image specific to the project instead of a unified image that has too many packages 
-# Remember to replace the name humble_cuda with whatever name you've given to your image
+# Remember to replace the name galactic_cuda with whatever name you've given to your image
 
-FROM humble_cuda AS base
+FROM galactic_cpu AS base
 
 #Basic updates
 RUN apt-get update
