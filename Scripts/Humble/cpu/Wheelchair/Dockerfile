@@ -41,7 +41,7 @@ RUN apt install ros-humble-hardware-interface
 
 # RUN add-apt-repository ppa:team-gcc-arm-embedded/ppa
 RUN apt-get update
-RUN apt-get upgrade
+RUN apt-get upgrade -y
 RUN apt-get install gcc-arm-none-eabi -y
 RUN apt-get install gdb-arm-none-eabi -y
 RUN git clone --recursive https://github.com/CNHGit/DiffDriveBaseControlelr_RP2040
@@ -95,8 +95,8 @@ RUN pip install pyrealsense2
 RUN apt-get update
 RUN apt-get install -y python3-wstool python3-rosdep ninja-build stow
 
-RUN sudo apt install ros-$ROS_DISTRO-cartographer
-RUN sudo apt install ros-$ROS_DISTRO-cartographer-ros
+RUN sudo apt install ros-$ROS_DISTRO-cartographer -y
+RUN sudo apt install ros-$ROS_DISTRO-cartographer-ros -y
 
 
 RUN apt install ros-humble-navigation2 ros-humble-nav2-bringup -y
