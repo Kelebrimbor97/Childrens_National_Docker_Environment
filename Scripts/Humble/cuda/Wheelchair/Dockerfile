@@ -83,7 +83,7 @@ RUN echo "deb [signed-by=/etc/apt/keyrings/librealsense.pgp] https://librealsens
 tee /etc/apt/sources.list.d/librealsense.list
 
 RUN apt-get update
-RUN apt-get install librealsense2-dkms -y
+# RUN apt-get install librealsense2-dkms -y
 RUN apt-get install librealsense2-utils -y
 RUN apt-get install librealsense2-dev -y
 RUN apt-get install librealsense2-dbg -y
@@ -94,8 +94,20 @@ RUN pip install pyrealsense2
 #Install Cartographer
 RUN apt-get update
 RUN apt-get install -y python3-wstool python3-rosdep ninja-build stow
-RUN sudo apt install ros-$ROS_DISTRO-cartographer
-RUN sudo apt install ros-$ROS_DISTRO-cartographer-ros
+
+RUN apt install ros-$ROS_DISTRO-cartographer -y
+RUN apt install ros-$ROS_DISTRO-cartographer-ros -y
+
+RUN apt install ros-humble-navigation2 ros-humble-nav2-bringup -y
+
+RUN apt-get install ros-humble-joint-state-publisher* ros-humble-robot-localization* -y
+# RUN apt-get install ros-humble-slam-toolbox* -y
+# RUN apt install ros-humble-rmw-cyclonedds-cpp -y
+RUN echo "source /opt/ros/humble/setup.bash">>~/.bashrc
+# RUN source /opt/ros/humble/setup.bash
+# RUN source ~/.bashrc
+# RUN apt install ros-humble-turtlebot3* -y
+# RUN apt install ros-humble-slam-toolbox -y
 
 #Install RPLidar
 
