@@ -43,7 +43,7 @@ RUN apt install ros-$ROS_DISTRO-hardware-interface
 RUN apt-get update
 RUN apt-get upgrade
 RUN apt-get install gcc-arm-none-eabi -y
-RUN apt-get install gdb-arm-none-eabi -y
+# RUN apt-get install gdb-arm-none-eabi -y
 RUN git clone --recursive https://github.com/CNHGit/DiffDriveBaseControlelr_RP2040
 RUN cd DiffDriveBaseControlelr_RP2040 && \
     git submodule update --init --recursive && \
@@ -68,9 +68,9 @@ RUN cd ~/WheelChair/src/serial-ros2 && \
     echo 'target_compile_options(${PROJECT_NAME} PRIVATE -fPIC)' >> CMakeLists.txt
     # cd .. && \
 
-RUN cd ~/WheelChair && \
-    colcon build && \
-    rm -rf build
+# RUN cd ~/WheelChair && \
+#     colcon build && \
+#     rm -rf build
 
 RUN apt-get install usbutils fdisk -y
 
@@ -104,6 +104,7 @@ RUN apt-get install ros-$ROS_DISTRO-joint-state-publisher* ros-$ROS_DISTRO-robot
 # RUN apt-get install ros-$ROS_DISTRO-slam-toolbox* -y
 # RUN apt install ros-$ROS_DISTRO-rmw-cyclonedds-cpp -y
 RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash">>~/.bashrc
+RUN echo ". /usr/share/gazebo/setup.sh">>~/.bashrc
 # RUN source /opt/ros/$ROS_DISTRO/setup.bash
 # RUN source ~/.bashrc
 # RUN apt install ros-$ROS_DISTRO-turtlebot3* -y

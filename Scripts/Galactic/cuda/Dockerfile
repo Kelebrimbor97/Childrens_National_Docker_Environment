@@ -149,26 +149,26 @@ RUN apt-get update \
   libxext6 \
   libx11-6
 
-#Extra stuff not important
-RUN apt-get install mesa-utils
-RUN apt-get install libgl1-mesa-glx
+# #Extra stuff not important
+# RUN apt-get install mesa-utils
+# RUN apt-get install libgl1-mesa-glx
 
-RUN apt-get update
-RUN sudo apt-get upgrade -y
-RUN apt-get dist-upgrade
+# RUN apt-get update
+# RUN sudo apt-get upgrade -y
+# RUN apt-get dist-upgrade
 
-## Installing dependencies for moveit
-RUN apt install ros-galactic-eigen-stl-containers -y
-RUN apt install libgeometric-shapes-dev -y
-RUN pip install cmake --upgrade
+# ## Installing dependencies for moveit
+# RUN apt install ros-galactic-eigen-stl-containers -y
+# RUN apt install libgeometric-shapes-dev -y
+# RUN pip install cmake --upgrade
 
 
-## Installing Moveit
-RUN apt install ros-galactic-moveit* -y
+# ## Installing Moveit
+# RUN apt install ros-galactic-moveit* -y
 
-RUN apt update && \
-    apt install -y libeigen3-dev
-RUN rosdep update
+# RUN apt update && \
+#     apt install -y libeigen3-dev
+# RUN rosdep update
 
 
 ## Installing I-Cube's iiwa package
@@ -189,18 +189,18 @@ RUN rosdep update
 # CMD ["bash"]
 
 ## Installing ROS Controls package
-RUN apt-get update && \
-    apt-get install -y ros-${ROS_DISTRO}-ros2-control ros-${ROS_DISTRO}-ros2-controllers&& \
-    rm -rf /var/lib/apt/lists/*
+# RUN apt-get update && \
+#     apt-get install -y ros-${ROS_DISTRO}-ros2-control ros-${ROS_DISTRO}-ros2-controllers&& \
+#     rm -rf /var/lib/apt/lists/*
 
 ## Install lbr iiwa stack
-RUN mkdir -p lbr_fri_ros2_stack_ws/src && \
-    cd lbr_fri_ros2_stack_ws &&\
-    wget https://raw.githubusercontent.com/KCL-BMEIS/lbr_fri_ros2_stack/galactic/lbr_fri_ros2_stack/repos.yml -P src &&\
-    vcs import src < src/repos.yml &&\
-    source /opt/ros/galactic/setup.bash &&\
-    rosdep install --from-paths src --ignore-src -r -y &&\
-    colcon build
+# RUN mkdir -p lbr_fri_ros2_stack_ws/src && \
+#     cd lbr_fri_ros2_stack_ws &&\
+#     wget https://raw.githubusercontent.com/KCL-BMEIS/lbr_fri_ros2_stack/galactic/lbr_fri_ros2_stack/repos.yml -P src &&\
+#     vcs import src < src/repos.yml &&\
+#     source /opt/ros/galactic/setup.bash &&\
+#     rosdep install --from-paths src --ignore-src -r -y &&\
+#     colcon build
 # RUN apt-get update && apt-get upgrade -y
 
 ## Env vars for the nvidia-container-runtime.

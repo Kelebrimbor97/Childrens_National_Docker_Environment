@@ -104,6 +104,7 @@ RUN apt-get install ros-$ROS_DISTRO-joint-state-publisher* ros-$ROS_DISTRO-robot
 # RUN apt-get install ros-$ROS_DISTRO-slam-toolbox* -y
 # RUN apt install ros-$ROS_DISTRO-rmw-cyclonedds-cpp -y
 RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash">>~/.bashrc
+RUN echo ". /usr/share/gazebo/setup.sh">>~/.bashrc
 # RUN source /opt/ros/$ROS_DISTRO/setup.bash
 # RUN source ~/.bashrc
 # RUN apt install ros-$ROS_DISTRO-turtlebot3* -y
