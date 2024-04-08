@@ -68,9 +68,9 @@ RUN cd ~/WheelChair/src/serial-ros2 && \
     echo 'target_compile_options(${PROJECT_NAME} PRIVATE -fPIC)' >> CMakeLists.txt
     # cd .. && \
 
-# RUN cd ~/WheelChair && \
-#     colcon build && \
-#     rm -rf build
+RUN cd ~/WheelChair && \
+    colcon build && \
+    rm -rf build
 
 RUN apt-get install usbutils fdisk -y
 
