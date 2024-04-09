@@ -101,10 +101,13 @@ RUN apt install ros-$ROS_DISTRO-cartographer-ros -y
 RUN apt install ros-$ROS_DISTRO-navigation2 ros-$ROS_DISTRO-nav2-bringup -y
 
 RUN apt-get install ros-$ROS_DISTRO-joint-state-publisher* ros-$ROS_DISTRO-robot-localization* -y
-# RUN apt-get install ros-$ROS_DISTRO-slam-toolbox* -y
-# RUN apt install ros-$ROS_DISTRO-rmw-cyclonedds-cpp -y
 RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash">>~/.bashrc
 RUN echo ". /usr/share/gazebo/setup.sh">>~/.bashrc
+
+# Experimental space
+
+# RUN apt-get install ros-$ROS_DISTRO-slam-toolbox* -y
+# RUN apt install ros-$ROS_DISTRO-rmw-cyclonedds-cpp -y
 # RUN source /opt/ros/$ROS_DISTRO/setup.bash
 # RUN source ~/.bashrc
 # RUN apt install ros-$ROS_DISTRO-turtlebot3* -y

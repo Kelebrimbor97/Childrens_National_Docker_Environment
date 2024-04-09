@@ -1,10 +1,10 @@
 # Childrens National Docker Environment
 
 ### Description
-This repo contains the instructions to setup the docker environment for the Kuka and Smart wheelchair projects. In theory, since we are using docker, the steps after installing docker should be the same for both windows and linux. Moving ahead, the individual packages required for these projects can be found in their respective sections. There are branches for both [ROS2 Galactic](https://docs.ros.org/en/galactic/index.html) and [ROS2 Humble](https://docs.ros.org/en/humble/index.html).
+This repo contains the instructions to setup the docker environment for the Kuka and Smart wheelchair projects. In theory, since we are using docker, the steps after installing docker should be the same for both windows and linux. Moving ahead, the individual packages required for these projects can be found in their respective sections. There were originally branches for both [ROS2 Galactic](https://docs.ros.org/en/galactic/index.html) and [ROS2 Humble](https://docs.ros.org/en/humble/index.html), however later on we realized that most of the ROS packages for the Wheelchair only worked on Galactic. Additionally, the KUKA project works with a device that has driver support for only Galactic. So, while very stable and capable of working in general, the Humble Docker image has no use, atleast as far as these 2 projects are concerned. Thus, the Humble image has been moved to Archive and additional developments for these projects will be carried out in Galactic only.
 
 >[!Note]
->- Docker installation instructions are provided below, while it is assumed that proper graphical drivers and CUDA for Nvidia GPUs are installed, the official instructions for which can be found [here](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/contents.html).
+>- Docker installation instructions are provided below, while it is assumed that for devices with an Nvidia GPU proper graphical drivers and CUDA for Nvidia GPUs are installed, the official instructions for which can be found [here](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/contents.html).
 >- If performing a fresh install for Nvidia Drivers on Linux, it is strongly recommended to use the [Lambda Stack](https://lambdalabs.com/lambda-stack-deep-learning-software) by Lambda labs. They also have additional support for ngc containers which is used for these Docker environments.
 
 ## 1. Requirements
@@ -12,7 +12,7 @@ This repo contains the instructions to setup the docker environment for the Kuka
 The following packages need to be installed on your base machine:
 
 1. **Linux** - Any flavor works. We use Ubuntu, specifically,  20.04
-2. **Docker** - Installation instructions can be found [here](https://docs.docker.com/engine/install/). Make sure that you also follow the post-installation instructions to ensure a smoothe experience where you don't have to constantly add `sudo` for every docker command.
+2. **Docker** - Installation instructions can be found [here](https://docs.docker.com/engine/install/). Make sure that you also follow the [post-installation instructions](https://docs.docker.com/engine/install/linux-postinstall/) to ensure a smooth experience where you don't have to constantly add `sudo` for every docker command.
 3. **Nvidia GPU Drivers** _(Recommended)_ - Although you can install the driver separately, I would highly recommend using Lambda Stack as mentioned above.
 <!-- The contents of this repo were tested on the following system:
 
@@ -72,50 +72,26 @@ After succesfully installing docker pull the custom docker image created by [All
    The current structure of this repo looks as shown below.
 
    ```bash
-   .
-├── humble_cuda
-│   └── ros2_ws
+.
 ├── Images
-│   └── gazebo_docker.png
 ├── README.md
-├── Scripts
-│   ├── focal_galactic
-│   │   └── ros2_ws
-│   ├── Galactic
-│   │   ├── Dockerfile
-│   │   ├── focal_galactic
-│   │   │   └── ros2_ws
-│   │   ├── KUKA
-│   │   ├── ros_entrypoint.sh
-│   │   ├── Table.stl
-│   │   └── Wheelchair
-│   ├── Humble
-│   │   ├── cpu
-│   │   │   ├── Dockerfile
-│   │   │   ├── KUKA
-│   │   │   │   ├── Dockerfile
-│   │   │   │   └── iiwa_installer.sh
-│   │   │   └── Wheelchair
-│   │   │       └── Dockerfile
-│   │   ├── cuda
-│   │   │   ├── Dockerfile
-│   │   │   ├── KUKA
-│   │   │   │   ├── Dockerfile
-│   │   │   │   └── iiwa_installer.sh
-│   │   │   └── Wheelchair
-│   │   │       └── Dockerfile
-│   │   ├── focal_galactic
-│   │   │   └── ros2_ws
-│   │   ├── humble_cuda
-│   │   │   └── ros2_ws
-│   │   ├── ros_entrypoint.sh
-│   │   ├── Table.stl
-│   │   └── Wheelchair
-│   │       └── humble_cuda
-│   │           └── ros2_ws
-│   └── run_gpu.bash
-└── Tej_Docker
-    └── Dockerfile
+└── Scripts
+    ├── Archive
+    └── Galactic
+        ├── cpu
+        │   ├── Dockerfile
+        │   ├── KUKA
+        │   └── Wheelchair
+        │       └── Dockerfile
+        ├── cuda
+        │   ├── Dockerfile
+        │   ├── KUKA
+        │   └── Wheelchair
+        │       └── Dockerfile
+        ├── focal_galactic
+        │   └── ros2_ws
+        ├── ros_entrypoint.sh
+        └── Table.stl
 
    ```
 
@@ -130,12 +106,12 @@ After succesfully installing docker pull the custom docker image created by [All
    #### A. For cpu install
 
    ```Shell
-   docker build -t humble_cpu .
+   docker build -t galactic_cpu .
    ```
    #### B. For CUDA install
 
    ```Shell
-   docker build -t humble_cuda .
+   docker build -t galactic_cuda .
    ``` 
 
    The following command will show docker images currently built and available on your host machine.
@@ -157,7 +133,8 @@ After succesfully installing docker pull the custom docker image created by [All
 After creating the docker image, it is ready to use. The command for using this is as following:
 
 ```Shell
-docker run -it --rm --name=<CONTAINER_NAME> --gpus=all --net=host --pid=host --privileged --env="DISPLAY=$DISPLAY" --volume="$PWD/<WORKSPACE_NAME>/ros2_ws:/home/${USER}/ros2_ws" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" <IMAGE_NAME>
+xhost +local:docker
+docker run -it --rm --name=<CONTAINER_NAME> --gpus=all --net=host --pid=host --privileged --env="DISPLAY=$DISPLAY" <IMAGE_NAME>
 ```
 
 >[!Note]
