@@ -69,7 +69,7 @@ After succesfully installing docker pull the custom docker image created by [All
    ### 1. Building the base Ubuntu-ROS2 image
    Clone this repo. Depending on the distro you wish to use, navigate to the correct folder.
 
-   The current structure of this repo looks as shown below.
+   The current structure (detailed only for important files) of this repo looks as shown below.
 
    ```bash
 .
@@ -88,11 +88,8 @@ After succesfully installing docker pull the custom docker image created by [All
         │   ├── KUKA
         │   └── Wheelchair
         │       └── Dockerfile
-        ├── focal_galactic
-        │   └── ros2_ws
         ├── ros_entrypoint.sh
         └── Table.stl
-
    ```
 
    Navigate into the `Scripts` folder inside the cloned repo and run the following command
