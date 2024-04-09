@@ -102,14 +102,14 @@ After succesfully installing docker pull the custom docker image created by [All
 
    #### A. For cpu install
 
-   Navigate to Scripts/Galactic/cpu and:
+   Navigate to `Scripts/Galactic/cpu and`:
 
    ```Shell
    docker build -t galactic_cpu .
    ```
    #### B. For CUDA install
 
-   Navigate to Scripts/Galactic/cuda and:
+   Navigate to `Scripts/Galactic/cuda` and:
    ```Shell
    docker build -t galactic_cuda .
    ``` 
