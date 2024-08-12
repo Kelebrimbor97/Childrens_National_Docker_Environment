@@ -49,7 +49,9 @@ RUN git clone --recurse-submodules https://github.com/CNHGit/WheelChair.git ~/Wh
     cd ~/WheelChair/src && \
     git clone https://github.com/RoverRobotics-forks/serial-ros2.git && \
     echo 'target_compile_options(${PROJECT_NAME} PRIVATE -fPIC)' >> ~/WheelChair/src/serial-ros2/CMakeLists.txt && \
-    cd ~/WheelChair && \
+    cd ~/WheelChair/src && \
+    git clone -b ros2 https://github.com/Slamtec/rplidar_ros.git && \
+    cd .. && \
     source /opt/ros/$ROS_DISTRO/setup.bash && \
     colcon build && \
     rm -rf build
