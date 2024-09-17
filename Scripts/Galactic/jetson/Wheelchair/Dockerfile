@@ -38,11 +38,11 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Clone and build DiffDriveBaseController_RP2040
-RUN git clone --recursive https://github.com/CNHGit/DiffDriveBaseControlelr_RP2040 && \
-    cd DiffDriveBaseControlelr_RP2040 && \
-    git submodule update --init --recursive && \
-    cmake -S . -B build/ && \
-    cmake --build build
+# RUN git clone --recursive https://github.com/CNHGit/DiffDriveBaseControlelr_RP2040 && \
+#     cd DiffDriveBaseControlelr_RP2040 && \
+#     git submodule update --init --recursive && \
+#     cmake -S . -B build/ && \
+#     cmake --build build
 
 # Clone and build WheelChair repo
 RUN git clone --recurse-submodules https://github.com/CNHGit/WheelChair.git ~/WheelChair && \
