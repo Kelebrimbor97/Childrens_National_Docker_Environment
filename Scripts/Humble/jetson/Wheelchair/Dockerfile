@@ -1,7 +1,7 @@
 #Using the GUI enabled image as BASE we create a separate image specific to the project instead of a unified image that has too many packages 
 # Remember to replace the name GALACTIC_cuda with whatever name you've given to your image
 # Using the GUI enabled image as BASE we create a separate image specific to the project
-FROM humble_jetson AS base
+FROM galactic_jetson AS base
 
 # Remove conflicting opencv-dev package if exists
 # RUN dpkg -l | grep opencv-dev && \
