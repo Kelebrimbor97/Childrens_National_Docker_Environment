@@ -47,12 +47,30 @@ RUN sudo add-apt-repository universe \
     python3-argcomplete \
   && rm -rf /var/lib/apt/lists/*
 
+################
+# Expose the nvidia driver to allow opengl 
+# Dependencies for glvnd and X11.
+################
+RUN apt-get update \
+ && apt-get install -y -qq --no-install-recommends \
+  libglvnd0 \
+  libgl1 \
+  libglx0 \
+  libegl1 \
+  libxext6 \
+  libx11-6
+
+# Env vars for the nvidia-container-runtime.
+ENV NVIDIA_VISIBLE_DEVICES all
+ENV NVIDIA_DRIVER_CAPABILITIES graphics,utility,compute
+ENV QT_X11_NO_MITSHM 1
+
 ENV ROS_DISTRO=humble
 ENV AMENT_PREFIX_PATH=/opt/ros/humble
 ENV COLCON_PREFIX_PATH=/opt/ros/humble
 ENV LD_LIBRARY_PATH=/opt/ros/humble/lib
 ENV PATH=/opt/ros/humble/bin:$PATH
-ENV PYTHONPATH=/opt/ros/humble/lib/python3.10/site-packages
+ENV PYTHONPATH=/opt/ros/humble/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages
 ENV ROS_PYTHON_VERSION=3
 ENV ROS_VERSION=2
 ENV DEBIAN_FRONTEND=
@@ -83,12 +101,17 @@ ARG USERNAME=ros
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
-# Create a non-root user
-RUN groupadd --gid $USER_GID $USERNAME \
-  && useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME \
-  # Add sudo support for the non-root user
-  && apt-get update \
-  && apt-get install -y sudo \
+# Check if "ubuntu" user exists, delete it if it does, then create the desired user
+RUN if getent passwd ubuntu > /dev/null 2>&1; then \
+        userdel -r ubuntu && \
+        echo "Deleted existing ubuntu user"; \
+    fi && \
+    groupadd --gid $USER_GID $USERNAME && \
+    useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME && \
+    echo "Created new user $USERNAME"
+
+# Add sudo support for the non-root user
+RUN apt-get update && apt-get install -y sudo \
   && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME\
   && chmod 0440 /etc/sudoers.d/$USERNAME \
   && rm -rf /var/lib/apt/lists/*
@@ -97,7 +120,7 @@ RUN groupadd --gid $USER_GID $USERNAME \
 RUN apt-get update && apt-get install -y git-core bash-completion \
   && echo "if [ -f /opt/ros/${ROS_DISTRO}/setup.bash ]; then source /opt/ros/${ROS_DISTRO}/setup.bash; fi" >> /home/$USERNAME/.bashrc \
   && echo "if [ -f /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash ]; then source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash; fi" >> /home/$USERNAME/.bashrc \
-  && rm -rf /var/lib/apt/lists/* 
+  && rm -rf /var/lib/apt/lists/*
 
 ENV DEBIAN_FRONTEND=
 ENV AMENT_CPPCHECK_ALLOW_SLOW_VERSIONS=1
@@ -113,6 +136,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   ros-humble-desktop \
   && rm -rf /var/lib/apt/lists/*
 ENV DEBIAN_FRONTEND=
+ENV LD_LIBRARY_PATH=/opt/ros/humble/lib
 
 ###########################################
 #  Full+Gazebo image
@@ -124,29 +148,9 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN wget https://packages.osrfoundation.org/gazebo.gpg -O /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg \
   && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null \
   && apt-get update && apt-get install -q -y --no-install-recommends \
-    ros-humble-gazebo* \
+    ros-humble-ros-gz \
   && rm -rf /var/lib/apt/lists/*
 ENV DEBIAN_FRONTEND=
-
-###########################################
-#  Full+Gazebo+Nvidia image
-###########################################
-
-FROM gazebo AS gazebo-nvidia
-
-################
-# Expose the nvidia driver to allow opengl 
-# Dependencies for glvnd and X11.
-################
-RUN apt-get update \
- && apt-get install -y -qq --no-install-recommends \
-  libglvnd0 \
-  libgl1 \
-  libglx0 \
-  libegl1 \
-  libxext6 \
-  libx11-6
-
 
 # #Everything from this point is unique to this project
 # RUN apt-get update

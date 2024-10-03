@@ -1,7 +1,7 @@
 #Using the GUI enabled image as BASE we create a separate image specific to the project instead of a unified image that has too many packages 
 # Remember to replace the name GALACTIC_cuda with whatever name you've given to your image
 # Using the GUI enabled image as BASE we create a separate image specific to the project
-FROM ros_humble AS base
+FROM humble_cuda AS base
 
 # Remove conflicting opencv-dev package if exists
 # RUN dpkg -l | grep opencv-dev && \
@@ -46,7 +46,6 @@ RUN git clone --recurse-submodules https://github.com/CNHGit/WheelChair.git ~/Wh
     cd ~/WheelChair/src && \
     git clone -b ros2 https://github.com/Slamtec/rplidar_ros.git && \
     cd .. && \
-    # chmod +x /opt/ros/humble/setup.bash && \
     source /opt/ros/$ROS_DISTRO/setup.bash && \
     colcon build --symlink-install && \
     rm -rf build
