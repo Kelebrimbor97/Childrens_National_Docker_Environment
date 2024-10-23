@@ -37,6 +37,16 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# Build ros2-controller-manager package from source
+RUN mkdir -p ~/ros2_ws/src && \
+    cd ~/ros2_ws/ && \
+    vcs import --input https://raw.githubusercontent.com/ros-controls/ros2_control_ci/master/ros_controls.$ROS_DISTRO.repos src && \
+    rosdep update --rosdistro=$ROS_DISTRO && \
+    sudo apt-get update && \
+    rosdep install --from-paths src --ignore-src -r -y && \
+    . /opt/ros/${ROS_DISTRO}/setup.sh && \
+    colcon build --symlink-install
+
 # Clone and build WheelChair repo
 SHELL ["/bin/bash", "-c"]
 RUN git clone --recurse-submodules https://github.com/CNHGit/WheelChair.git ~/WheelChair && \
@@ -47,7 +57,7 @@ RUN git clone --recurse-submodules https://github.com/CNHGit/WheelChair.git ~/Wh
     git clone -b ros2 https://github.com/Slamtec/rplidar_ros.git && \
     cd .. && \
     source /opt/ros/$ROS_DISTRO/setup.bash && \
-    colcon build --symlink-install && \
+    colcon build && \
     rm -rf build
 
 # Install librealsense
@@ -70,4 +80,5 @@ RUN pip install pyrealsense2
 # Source ROS setup
 RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> ~/.bashrc && \
     echo ". /usr/share/gazebo/setup.sh" >> ~/.bashrc && \
-    echo "source ~/WheelChair/install/setup.bash" >> ~/.bashrc
+    echo "source ~/WheelChair/install/setup.bash" >> ~/.bashrc && \
+    echo "source ~/ros2_ws/install/setup.bash" >> ~/.bashrc
