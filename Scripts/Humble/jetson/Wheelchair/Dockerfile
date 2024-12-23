@@ -38,17 +38,27 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Build ros2-controller-manager package from source
-RUN mkdir -p ~/ros2_ws/src && \
-    cd ~/ros2_ws/ && \
-    vcs import --input https://raw.githubusercontent.com/ros-controls/ros2_control_ci/master/ros_controls.$ROS_DISTRO.repos src && \
-    rosdep update --rosdistro=$ROS_DISTRO && \
-    sudo apt-get update && \
-    rosdep install --from-paths src --ignore-src -r -y && \
-    . /opt/ros/${ROS_DISTRO}/setup.sh && \
-    colcon build --symlink-install
+RUN mkdir -p /home/ros2_ws/src \
+    && cd /home/ros2_ws/src \
+    && git clone https://github.com/ros-controls/gz_ros2_control/ -b ${ROS_DISTRO} \
+    && rosdep update 
+
+RUN cd /home/ros2_ws/ \
+    && apt-get update \
+    && rosdep install --from-paths ./ -i -y --rosdistro ${ROS_DISTRO}
+
+# RUN mkdir -p ~/ros2_ws/src && \
+#     cd ~/ros2_ws/ && \
+#     vcs import --input https://raw.githubusercontent.com/ros-controls/ros2_control_ci/master/ros_controls.$ROS_DISTRO.repos src && \
+#     rosdep update --rosdistro=$ROS_DISTRO && \
+#     sudo apt-get update && \
+#     rosdep install --from-paths src --ignore-src -r -y && \
+#     . /opt/ros/${ROS_DISTRO}/setup.sh && \
+#     colcon build --symlink-install
 
 # Clone and build WheelChair repo
-RUN git clone --recurse-submodules https://github.com/CNHGit/WheelChair.git ~/WheelChair && \
+RUN apt-get install -y ros-${ROS_DISTRO}-rmw-cyclonedds-cpp && \
+    git clone --recurse-submodules https://github.com/CNHGit/WheelChair.git ~/WheelChair && \
     cd ~/WheelChair/src && \
     git clone https://github.com/RoverRobotics-forks/serial-ros2.git && \
     echo 'target_compile_options(${PROJECT_NAME} PRIVATE -fPIC)' >> ~/WheelChair/src/serial-ros2/CMakeLists.txt && \
